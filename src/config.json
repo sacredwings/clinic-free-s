@@ -1,0 +1,17 @@
+{
+  "server": {
+    "port": 3041,
+    "db": {
+      "social_network": {
+        "host": "localhost",
+        "port": 5454,
+        "user": "social_network",
+        "password": "11111111",
+        "database": "social_network",
+
+        "max": 1,
+        "connectionLimit": 1
+      }
+    }
+  }
+}
