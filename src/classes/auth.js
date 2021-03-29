@@ -30,19 +30,6 @@ export default class {
         }
     }
 
-    static async GetById ( id ) {
-        try {
-            let result = await DB.Init.Query(`SELECT * FROM ${DB.Init.TablePrefix}token WHERE id=$1`, [id])
-            if (result.length)
-                return result[0]
-
-            return false
-        } catch (err) {
-            console.log(err)
-            throw ({err: 1003000, msg: 'CAuth GetById'})
-        }
-    }
-
     static async AddToken ( userId, ip, browser ) {
         try {
 

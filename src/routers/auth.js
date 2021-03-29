@@ -36,7 +36,7 @@ export default class {
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'Ошибка авторизации'}, ...err});
+                throw ({...{err: 10000000, msg: 'RAuth Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

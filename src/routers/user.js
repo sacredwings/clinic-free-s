@@ -10,8 +10,16 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    login: Joi.string().min(5).max(50).required(),
-                    password: Joi.string().min(8).max(60).required(),
+                    first_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                    last_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+                    patronymic_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
+
+                    login: Joi.string().min(5).max(255).allow(null).empty('').default(null),
+                    password: Joi.string().min(8).max(60).allow(null).empty('').default(null),
+
+                    medical_specialty_ids: Joi.array().min(1).max(200).items(Joi.string().min(12).max(12)).allow(null).empty('').default(null),
+                    working_specialty_ids: Joi.array().min(1).max(200).items(Joi.string().min(12).max(12)).allow(null).empty('').default(null),
+                    harmful_factor_ids: Joi.array().min(1).max(200).items(Joi.string().min(12).max(12)).allow(null).empty('').default(null),
                 });
                 value = await schema.validateAsync(ctx.request.body);
 
@@ -33,13 +41,14 @@ export default class {
                     response: true
                 };
             } catch (err) {
-                throw ({...{err: 30100000, msg: 'Ошибка формирования результата'}, ...err});
+                throw ({...{err: 30100000, msg: 'RUser Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
         }
     }
 
+    /*
     static async Reg (ctx, next) {
         let value;
         try {
@@ -198,5 +207,5 @@ export default class {
         } catch (err) {
             ctx.body = err;
         }
-    }
+    }*/
 }

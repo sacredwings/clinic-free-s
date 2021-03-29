@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CAnalysis from "../classes/analysis";
+import COrganization from "../classes/organization";
 
 export default class {
 
@@ -9,9 +9,8 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    name: Joi.string().min(1).max(255),
-                    price_prof: Joi.number().integer().min(0).max(999999999).allow(null).empty('').default(null),
-                    price: Joi.number().integer().min(0).max(999999999).allow(null).empty('').default(null),
+                    name: Joi.string().min(1).max(255).required(),
+                    inn: Joi.number().integer().min(0).max(9223372036854775807).required(),
                 });
 
                 value = await schema.validateAsync(ctx.request.body);
@@ -21,14 +20,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CAnalysis.Add ( value );
+                let result = await COrganization.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'CAnalysis Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'ROrganization Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CSpecialty from "../classes/specialty";
+import CContract from "../classes/contract";
 
 export default class {
 
@@ -9,8 +9,8 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    name: Joi.string().min(1).max(255),
-                    price_prof: Joi.number().integer().min(0).max(999999999).allow(null).empty('').default(null)
+                    name: Joi.string().min(1).max(255).required(),
+                    org_id: Joi.array().min(1).max(200).items(Joi.string().min(12).max(12)).required()
                 });
 
                 value = await schema.validateAsync(ctx.request.body);
@@ -20,14 +20,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CSpecialty.Add ( value );
+                let result = await CContract.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RSpecialty Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'ROrganization Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
