@@ -4,10 +4,13 @@ import authorization from './authorization'
 //классы api
 import routersAuth from './routers/auth'
 import routersUser from './routers/user'
-import routersResearch from './routers/research'
-import routersAnalysis from './routers/analysis'
+import routersResearch from './routers/priceServices'
+import routersAnalysis from './routers/priceAnalysis'
+import routersInit from './routers/init'
 import routersSpecialty from './routers/specialty'
 
+const routerInit = new Router({prefix: '/init'})
+routerInit.post('/vf', routersInit.VF)
 
 //МАРШРУТЫ
 const routerAuth = new Router({prefix: '/auth'})
@@ -30,6 +33,7 @@ const router = new Router()
 router.use(authorization) //проверка авторизиции перед дальнейшими действиями
 router.use(
     '/api',
+    routerInit.routes(),
     routerAuth.routes(),
     routerUser.routes(),
     routerResearch.routes(),
