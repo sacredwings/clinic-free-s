@@ -6,7 +6,7 @@ export default class {
         let value;
         try {
             try {
-                let collection = mongo.db.collection('price_research')
+                let collection = mongo.db.collection('hf-specialty')
 
                 let arSpecialty = [
                     ['дерматовенеролог ',0],
@@ -16,13 +16,16 @@ export default class {
                     ['стоматолог  ',0],
                     ['уролог  ',0],
                     ['инфекционист  ',0],
-
-
-
-
-
                 ]
 
+                arSpecialty = arSpecialty.map((item, i)=>{
+                    return {name: item[0], price: item[1]}
+                })
+
+                await collection.insert(arSpecialty)
+
+
+                collection = mongo.db.collection('hf-research')
                 let arResearch = [
                     ['Спирометрия ',0],
                     ['Пульсоксиметрия ',0],
@@ -398,7 +401,7 @@ export default class {
                         arResearch[1]._id,
                         arResearch[6]._id,
                         arSpecialty[2]._id
-                    ], 'Марганец1* и его соединения, в том числе марганец карбонат гидрат^1’, марганец нитрат гексагидрат*р, марганец сульфат пентагидрат*, марганец трикарбонилциклопентадиен1*', 0],
+                    ], [], 'Марганец1* и его соединения, в том числе марганец карбонат гидрат^1’, марганец нитрат гексагидрат*р, марганец сульфат пентагидрат*, марганец трикарбонилциклопентадиен1*', 0],
                     ['1.18', [], [],'Медь, золото, серебро и их соединения, в том числе:', 0],
                     ['1.18.1', [
                         arResearch[0]._id,
@@ -1600,7 +1603,7 @@ export default class {
                     ['4.4', [
                         arResearch[14]._id,
                         arResearch[28]._id
-                    ], 'Шум', []],
+                    ], [], 'Шум', []],
                     ['4.5', [
                         arResearch[14]._id,
                         arResearch[28]._id
@@ -2029,12 +2032,8 @@ export default class {
                     return {code: item[0], research: item[1], name: item[2]}
                 })
 
-                console.log(arHarmfulFactor)
-
-                let collectionHarmfulFactor = mongo.db.collection('harmful_factor')
+                let collectionHarmfulFactor = mongo.db.collection('hf')
                 await collectionHarmfulFactor.insert(arHarmfulFactor)
-
-                console.log(arHarmfulFactor)
 
                 ctx.body = {
                     err: 0,
