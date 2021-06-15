@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CPriceAnalysis from "../classes/priceAnalysis";
+import CPriceAnalysis from "../classes/hfAnalysis";
 
 export default class {
 

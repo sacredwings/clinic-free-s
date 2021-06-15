@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CSpecialty from "../classes/specialty";
+import CSpecialty from "../classes/hfSpecialty";
 
 export default class {
 

@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CPriceResearch from "../classes/priceResearch";
+import CPriceResearch from "../classes/hfResearch";
 
 export default class {
 

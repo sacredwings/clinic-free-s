@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CHarmfulFactor from "../classes/harmfulFactor";
+import CHarmfulFactor from "../classes/hf";
 
 export default class {
 

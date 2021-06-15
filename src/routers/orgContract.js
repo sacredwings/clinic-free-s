@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CContract from "../classes/contract";
+import CContract from "../classes/orgContract";
 
 export default class {
 
