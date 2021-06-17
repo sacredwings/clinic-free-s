@@ -36,9 +36,11 @@ routerSpecialty.post('/add', routersSpecialty.Add)
 
 const routerOrg = new Router({prefix: '/org'})
 routerOrg.post('/add', routersOrg.Add)
+routerOrg.get('/get', routersOrg.Get)
 
 const routerOrgContract = new Router({prefix: '/org-contract'})
 routerOrgContract.post('/add', routersOrgContract.Add)
+routerOrgContract.get('/get', routersOrgContract.Get)
 
 //объединеный, общий маршрут
 const router = new Router()

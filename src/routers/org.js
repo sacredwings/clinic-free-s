@@ -50,4 +50,41 @@ export default class {
             ctx.body = err;
         }
     }
+
+    static async Get (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
+                    count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
+                });
+
+                value = await schema.validateAsync(ctx.request.query);
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+            }
+            try {
+                let fields = {
+                    offset: value.offset,
+                    count: value.count
+                }
+                let result = await COrg.Get ( fields);
+
+                ctx.body = {
+                    err: 0,
+                    response: {
+                        items: result
+                    }
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'ROrg Get'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
 }
