@@ -36,11 +36,16 @@ routerSpecialty.post('/add', routersSpecialty.Add)
 
 const routerOrg = new Router({prefix: '/org'})
 routerOrg.post('/add', routersOrg.Add)
+routerOrg.get('/getById', routersOrg.GetById)
 routerOrg.get('/get', routersOrg.Get)
 
 const routerOrgContract = new Router({prefix: '/org-contract'})
 routerOrgContract.post('/add', routersOrgContract.Add)
 routerOrgContract.get('/get', routersOrgContract.Get)
+
+const routerWorker = new Router({prefix: '/worker'})
+routerWorker.post('/add', routersUser.WorkerAdd)
+//routerWorker.get('/get', routersUser.WorkerGet)
 
 //объединеный, общий маршрут
 const router = new Router()
@@ -53,6 +58,7 @@ router.use(
 
     routerOrg.routes(),
     routerOrgContract.routes(),
+    routerWorker.routes(),
 
 );
 export default router

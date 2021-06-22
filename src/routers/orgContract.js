@@ -59,10 +59,13 @@ export default class {
             }
             try {
                 let fields = {
+                    org_id: value.org_id
+                }
+                let params = {
                     offset: value.offset,
                     count: value.count
                 }
-                let result = await COrgContract.Get (fields);
+                let result = await COrgContract.Get (fields, params);
 
                 ctx.body = {
                     err: 0,

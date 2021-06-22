@@ -8,8 +8,13 @@ export default class {
         let value;
         try {
             try {
+                if (ctx.request.body.hf) ctx.request.body.hf = ctx.request.body.hf.split(',')
                 //схема
                 const schema = Joi.object({
+                    org_contract_id: Joi.string().min(24).max(24).required(),
+
+                    hf: Joi.array().min(1).max(100).required(),
+
                     first_name: Joi.string().min(1).max(255).required(),
                     last_name: Joi.string().min(1).max(255).required(),
                     patronymic_name: Joi.string().min(1).max(255).allow(null).empty('').default(null),
@@ -29,9 +34,9 @@ export default class {
                     apt: Joi.string().min(0).max(255).allow(null).empty('').default(null),
                     building: Joi.string().min(0).max(255).allow(null).empty('').default(null),
 
-                    passport_serial: Joi.number().integer().min(1).max(9999).required(),
-                    passport_number: Joi.number().integer().min(1).max(999999).required(),
-                    passport_date: Joi.date().min('1-1-1900').max('1-1-2030').required(),
+                    passport_serial: Joi.number().integer().min(1).max(9999).allow(null).empty('').default(null),
+                    passport_number: Joi.number().integer().min(1).max(999999).allow(null).empty('').default(null),
+                    passport_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
 
                     passport_issued_by: Joi.string().min(0).max(255).allow(null).empty('').default(null),
                     phone: Joi.number().integer().min(70000000000).max(79999999999).allow(null).empty('').default(null),
@@ -42,8 +47,7 @@ export default class {
                     employment_date: Joi.date().min('1-1-1900').max('1-1-2030').allow(null).empty('').default(null),
 
                     work_place: Joi.string().min(0).max(255).allow(null).empty('').default(null),
-                    work_experience: Joi.number().integer().min(0).max(100).allow(null).empty('').default(null)
-
+                    work_experience: Joi.number().integer().min(0).max(100).allow(null).empty('').default(null),
                 });
                 value = await schema.validateAsync(ctx.request.body);
 
@@ -52,7 +56,39 @@ export default class {
                 throw ({err: 412, msg: 'Неверные параметры'});
             }
             try {
-                let worker = await CUser.Add ( value );
+                let fields = {
+                    org_contract_id: value.org_contract_id,
+
+                    first_name: value.first_name,
+                    last_name: value.last_name,
+                    patronymic_name: value.patronymic_name,
+
+                    man: value.man,
+
+                    date_birth: value.date_birth,
+
+                    oms_policy_number: value.oms_policy_number,
+                    snils: value.snils,
+
+                    region: value.region,
+                    city: value.city,
+                    street: value.street,
+                    house: value.house,
+                    housing: value.housing,
+                    apt: value.apt,
+                    building: value.building,
+
+                    passport_serial: value.passport_serial,
+                    passport_number: value.passport_number,
+                    passport_date: value.passport_date,
+
+                    passport_issued_by: value.passport_issued_by,
+                    phone: value.phone,
+                    phone_additional: value.phone_additional,
+                }
+                let worker = await CUser.Add ( fields );
+                console.log('Добавил пользователя')
+                console.log(worker)
 
                 ctx.body = {
                     err: 0,

@@ -51,6 +51,39 @@ export default class {
         }
     }
 
+    static async GetById (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    id: Joi.string().min(24).max(24).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.query);
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+            }
+            try {
+                let fields = {
+                    _id: value.id
+                }
+                let result = await COrg.GetById (fields);
+
+                ctx.body = {
+                    err: 0,
+                    response: result[0]
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'ROrg Get'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
+
     static async Get (ctx, next) {
         let value;
         try {
@@ -68,11 +101,11 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let fields = {
+                let params = {
                     offset: value.offset,
                     count: value.count
                 }
-                let result = await COrg.Get ( fields);
+                let result = await COrg.Get ({}, params);
 
                 ctx.body = {
                     err: 0,

@@ -7,25 +7,29 @@ export default class {
     //поиск по login
     static async Add ( fields ) {
         try {
-            //в нижний регистр
-            fields.login = fields.login.toLowerCase()
+
+            if (fields.login) {
+                //в нижний регистр
+                fields.login = fields.login.toLowerCase()
+
+                //поиск пользователя по логину
+                let user = await this.GetByLogin(fields.login);
+                if (user)
+                    throw ({err: 1001001, msg: 'Пользователь уже существует'});
+
+                //создаем hash код
+                let hash = new Date().toString();
+                hash = crypto.createHash('md5').update(hash).digest("hex");
+
+                //создаем hash пароль
+                const saltRounds = 10;
+                let passwordSalt = await bcrypt.genSalt(saltRounds);
+                fields.password = await bcrypt.hash(fields.password, passwordSalt);
+            }
 
             let collection = mongo.db.collection('user')
 
-            //поиск пользователя по логину
-            let user = await this.GetByLogin(fields.login);
-            if (user)
-                throw ({err: 1001001, msg: 'Пользователь уже существует'});
-
-            //создаем hash код
-            let hash = new Date().toString();
-            hash = crypto.createHash('md5').update(hash).digest("hex");
-
-            //создаем hash пароль
-            const saltRounds = 10;
-            let passwordSalt = await bcrypt.genSalt(saltRounds);
-            fields.password = await bcrypt.hash(fields.password, passwordSalt);
-
+            fields.org_contract_id = mongo.ObjectID(fields.org_contract_id)
             let result = await collection.insertOne(fields)
 
             return result
