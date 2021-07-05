@@ -43,9 +43,9 @@ const routerOrgContract = new Router({prefix: '/org-contract'})
 routerOrgContract.post('/add', routersOrgContract.Add)
 routerOrgContract.get('/get', routersOrgContract.Get)
 
-const routerWorker = new Router({prefix: '/worker'})
-routerWorker.post('/add', routersUser.WorkerAdd)
-//routerWorker.get('/get', routersUser.WorkerGet)
+const routerWorker = new Router({prefix: '/hf-user'})
+routerWorker.post('/add', routersUser.HfUserAdd)
+routerWorker.get('/get', routersUser.HfUserGet)
 
 //объединеный, общий маршрут
 const router = new Router()

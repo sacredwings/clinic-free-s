@@ -1,10 +1,11 @@
 import Joi from "joi";
 import Config from "../config.json";
 import CUser from "../classes/user";
+import CAuth from "../classes/auth";
 
 export default class {
 
-    static async WorkerAdd (ctx, next) {
+    static async HfUserAdd (ctx, next) {
         let value;
         try {
             try {
@@ -57,8 +58,6 @@ export default class {
             }
             try {
                 let fields = {
-                    org_contract_id: value.org_contract_id,
-
                     first_name: value.first_name,
                     last_name: value.last_name,
                     patronymic_name: value.patronymic_name,
@@ -86,9 +85,22 @@ export default class {
                     phone: value.phone,
                     phone_additional: value.phone_additional,
                 }
-                let worker = await CUser.Add ( fields );
-                console.log('Добавил пользователя')
-                console.log(worker)
+                let user = await CUser.Add ( fields );
+
+                fields = {
+                    user_id: fields._id,
+
+                    org_contract_id: value.org_contract_id,
+                    hf: value.hf,
+
+                    subdivision: value.subdivision,
+                    profession: value.profession,
+                    employment_date: value.employment_date,
+
+                    work_place: value.work_place,
+                    work_experience: value.work_experience,
+                }
+                let hfUser = await CUser.HfUserAdd ( fields );
 
                 ctx.body = {
                     err: 0,
@@ -96,6 +108,39 @@ export default class {
                 };
             } catch (err) {
                 throw ({...{err: 30100000, msg: 'RUser Add'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
+
+    static async HfUserGet (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    org_contract_id: Joi.string().min(24).max(24).required(),
+                });
+                value = await schema.validateAsync(ctx.request.query);
+
+            } catch (err) {
+                console.log(err)
+                throw ({err: 412, msg: 'Неверные параметры'});
+            }
+            try {
+                let arFields = {
+                    org_contract_id: value.org_contract_id
+                }
+
+                let result = await CUser.HfUserGet ( arFields );
+
+                ctx.body = {
+                    err: 0,
+                    response: result
+                };
+            } catch (err) {
+                throw ({...{err: 30100000, msg: 'RUser HfUserGet'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

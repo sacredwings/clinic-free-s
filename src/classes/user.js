@@ -40,6 +40,46 @@ export default class {
         }
     }
 
+    //поиск по login
+    static async HfUserAdd ( fields ) {
+        try {
+            let collection = mongo.db.collection('hf_user')
+
+            fields.user_id = mongo.ObjectID(fields.user_id)
+            fields.org_contract_id = mongo.ObjectID(fields.org_contract_id)
+            let result = await collection.insertOne(fields)
+
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CUser HfUserAdd'}, ...err})
+        }
+    }
+
+    //поиск по login
+    static async HfUserGet ( fields ) {
+        try {
+            let collection = mongo.db.collection('hf_user')
+
+            let result = await collection.aggregate([
+                { $lookup:
+                        {
+                            from: 'user',
+                            localField: 'user_id',
+                            foreignField: '_id',
+                            as: 'user_ids'
+                        }
+                }
+            ]).toArray();
+
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CUser HfUserGet'}, ...err})
+        }
+    }
     /*
     //поиск по id
     static async GetById ( ids ) {
