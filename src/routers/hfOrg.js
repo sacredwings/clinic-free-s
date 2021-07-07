@@ -1,5 +1,5 @@
 import Joi from "joi";
-import COrg from "../classes/org";
+import CHfOrg from "../classes/hfOrg";
 
 export default class {
 
@@ -44,7 +44,7 @@ export default class {
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'ROrg Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfOrg Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
@@ -70,14 +70,14 @@ export default class {
                 let fields = {
                     _id: value.id
                 }
-                let result = await COrg.GetById (fields);
+                let result = await CHfOrg.GetById (fields);
 
                 ctx.body = {
                     err: 0,
                     response: result[0]
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'ROrg Get'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfOrg GetById'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
@@ -105,7 +105,7 @@ export default class {
                     offset: value.offset,
                     count: value.count
                 }
-                let result = await COrg.Get ({}, params);
+                let result = await CHfOrg.Get ({}, params);
 
                 ctx.body = {
                     err: 0,

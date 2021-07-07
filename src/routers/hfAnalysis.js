@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CPriceAnalysis from "../classes/hfAnalysis";
+import CHfAnalysis from "../classes/hfAnalysis";
 
 export default class {
 
@@ -21,14 +21,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CPriceAnalysis.Add ( value );
+                let result = await CHfAnalysis.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RPriceAnalysis Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfAnalysis Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

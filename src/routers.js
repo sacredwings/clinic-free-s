@@ -10,8 +10,9 @@ import routersHfResearch from './routers/hfResearch.js'
 import routersHfAnalysis from './routers/hfAnalysis'
 import routersHfSpecialty from './routers/hfSpecialty'
 
-import routersOrg from './routers/org'
-import routersOrgContract from './routers/orgContract'
+import routersHfOrg from './routers/hfOrg'
+import routersHfContract from './routers/hfContract'
+import routersHfUser from './routers/hfUser'
 
 const routerInit = new Router({prefix: '/init'})
 routerInit.post('/vf', routersInit.VF)
@@ -34,18 +35,19 @@ const routerSpecialty = new Router({prefix: '/hf-specialty'})
 routerSpecialty.post('/add', routersSpecialty.Add)
 */
 
-const routerOrg = new Router({prefix: '/org'})
-routerOrg.post('/add', routersOrg.Add)
-routerOrg.get('/getById', routersOrg.GetById)
-routerOrg.get('/get', routersOrg.Get)
+const routerHfOrg = new Router({prefix: '/hf-org'})
+routerHfOrg.post('/add', routersHfOrg.Add)
+routerHfOrg.get('/getById', routersHfOrg.GetById)
+routerHfOrg.get('/get', routersHfOrg.Get)
 
-const routerOrgContract = new Router({prefix: '/org-contract'})
-routerOrgContract.post('/add', routersOrgContract.Add)
-routerOrgContract.get('/get', routersOrgContract.Get)
+const routerHfContract = new Router({prefix: '/hf-contract'})
+routerHfContract.post('/add', routersHfContract.Add)
+routerHfContract.get('/get', routersHfContract.Get)
+routerHfContract.get('/getById', routersHfContract.GetById)
 
-const routerWorker = new Router({prefix: '/hf-user'})
-routerWorker.post('/add', routersUser.HfUserAdd)
-routerWorker.get('/get', routersUser.HfUserGet)
+const routerHfUser = new Router({prefix: '/hf-user'})
+routerHfUser.post('/add', routersHfUser.Add)
+routerHfUser.get('/get', routersHfUser.Get)
 
 //объединеный, общий маршрут
 const router = new Router()
@@ -56,9 +58,9 @@ router.use(
     routerAuth.routes(),
     routerUser.routes(),
 
-    routerOrg.routes(),
-    routerOrgContract.routes(),
-    routerWorker.routes(),
+    routerHfOrg.routes(),
+    routerHfContract.routes(),
+    routerHfUser.routes(),
 
 );
 export default router

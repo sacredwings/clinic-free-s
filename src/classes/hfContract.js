@@ -4,13 +4,15 @@ export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = mongo.db.collection('org');
+            let collection = mongo.db.collection('hf_contract');
+
+            fields.org_id = mongo.ObjectID(fields.org_id)
             let result = await collection.insertOne(fields)
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'COrg Add'}, ...err})
+            throw ({...{err: 7001000, msg: 'CHfContract Add'}, ...err})
         }
     }
 
@@ -18,25 +20,28 @@ export default class {
         try {
             fields._id = mongo.ObjectID(fields._id)
 
-            let collection = mongo.db.collection('org');
+            let collection = mongo.db.collection('hf_contract');
             let result = await collection.find(fields).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'COrg Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CHfContract GetById'}, ...err})
         }
     }
 
     static async Get ( fields, params ) {
         try {
-            let collection = mongo.db.collection('org');
+            if (fields.org_id)
+                fields.org_id = mongo.ObjectID(fields.org_id)
+
+            let collection = mongo.db.collection('hf_contract');
             let result = await collection.find(fields).limit(params.count).skip(params.offset).toArray()
             return result
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'COrg Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CHfContract Get'}, ...err})
         }
     }
 }

@@ -1,5 +1,5 @@
 import Joi from "joi";
-import COrgContract from "../classes/orgContract";
+import CHfContract from "../classes/hfContract";
 
 export default class {
 
@@ -24,14 +24,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await COrgContract.Add ( value );
+                let result = await CHfContract.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'COrgContract Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'CHfContract Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
@@ -65,7 +65,7 @@ export default class {
                     offset: value.offset,
                     count: value.count
                 }
-                let result = await COrgContract.Get (fields, params);
+                let result = await CHfContract.Get (fields, params);
 
                 ctx.body = {
                     err: 0,
@@ -75,6 +75,39 @@ export default class {
                 };
             } catch (err) {
                 throw ({...{err: 10000000, msg: 'COrgContract Get'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
+
+    static async GetById (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    id: Joi.string().min(24).max(24).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.query);
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+            }
+            try {
+                let fields = {
+                    _id: value.id
+                }
+                let result = await CHfContract.GetById (fields);
+
+                ctx.body = {
+                    err: 0,
+                    response: result[0]
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'RHfOrg GetById'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

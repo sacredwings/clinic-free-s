@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CSpecialty from "../classes/hfSpecialty";
+import CHfSpecialty from "../classes/hfSpecialty";
 
 export default class {
 
@@ -20,14 +20,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CSpecialty.Add ( value );
+                let result = await CHfSpecialty.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RSpecialty Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfSpecialty Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

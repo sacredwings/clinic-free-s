@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CPriceResearch from "../classes/hfResearch";
+import CHfResearch from "../classes/hfResearch";
 
 export default class {
 
@@ -21,14 +21,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CPriceResearch.Add ( value );
+                let result = await CHfResearch.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RPriceResearch Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfResearch Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
