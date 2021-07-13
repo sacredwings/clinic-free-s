@@ -2,7 +2,7 @@ import mongo from 'mongodb';
 
 export default class {
 
-    static async VF (ctx, next) {
+    static async Hf (ctx, next) {
         let value;
         try {
             try {

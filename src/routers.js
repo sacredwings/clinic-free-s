@@ -15,7 +15,7 @@ import routersHfContract from './routers/hfContract'
 import routersHfUser from './routers/hfUser'
 
 const routerInit = new Router({prefix: '/init'})
-routerInit.post('/vf', routersInit.VF)
+routerInit.post('/hf', routersInit.Hf)
 
 //МАРШРУТЫ
 const routerAuth = new Router({prefix: '/auth'})
@@ -44,6 +44,8 @@ const routerHfContract = new Router({prefix: '/hf-contract'})
 routerHfContract.post('/add', routersHfContract.Add)
 routerHfContract.get('/get', routersHfContract.Get)
 routerHfContract.get('/getById', routersHfContract.GetById)
+routerHfContract.get('/statistic', routersHfContract.Statistic)
+
 
 const routerHfUser = new Router({prefix: '/hf-user'})
 routerHfUser.post('/add', routersHfUser.Add)

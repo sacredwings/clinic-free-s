@@ -138,7 +138,9 @@ export default class {
 
                 ctx.body = {
                     err: 0,
-                    response: result
+                    response: {
+                        items: result
+                    }
                 };
             } catch (err) {
                 throw ({...{err: 30100000, msg: 'RHfUser HfUserGet'}, ...err});

@@ -35,7 +35,7 @@ export default class {
                             from: 'user',
                             localField: 'user_id',
                             foreignField: '_id',
-                            as: 'user_ids'
+                            as: 'user'
                         }
                 }
             ]).toArray();

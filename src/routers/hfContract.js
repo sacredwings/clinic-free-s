@@ -113,4 +113,47 @@ export default class {
             ctx.body = err;
         }
     }
+
+    static async Statistic (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    contract_id: Joi.string().min(24).max(24).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.query);
+
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+            }
+            try {
+
+
+                /*
+                let fields = {
+                    org_id: value.org_id
+                }
+                let params = {
+                    offset: value.offset,
+                    count: value.count
+                }
+                let result = await CHfContract.Get (fields, params);
+*/
+                ctx.body = {
+                    err: 0,
+                    response: {
+                        //items: result
+                    }
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'COrgContract Get'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
 }
