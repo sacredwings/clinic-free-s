@@ -6,7 +6,7 @@ export default class {
         let value;
         try {
             try {
-                let collection = mongo.db.collection('hf-specialty')
+                let collection = mongo.db.collection('hf_specialty')
 
                 let arSpecialty = [
                     ['дерматовенеролог ',0],
@@ -25,7 +25,7 @@ export default class {
                 await collection.insert(arSpecialty)
 
 
-                collection = mongo.db.collection('hf-research')
+                collection = mongo.db.collection('hf_research')
                 let arResearch = [
                     ['Спирометрия ',0],
                     ['Пульсоксиметрия ',0],
@@ -2029,7 +2029,7 @@ export default class {
                 ]
 
                 arHarmfulFactor = arHarmfulFactor.map((item, i)=>{
-                    return {code: item[0], research: item[1], name: item[2]}
+                    return {code: item[0], research_id: item[1], specialty_id: item[2]}
                 })
 
                 let collectionHarmfulFactor = mongo.db.collection('hf')

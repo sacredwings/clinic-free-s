@@ -9,7 +9,7 @@ export default class {
             let collection = mongo.db.collection('hf_user')
 
             fields.user_id = mongo.ObjectID(fields.user_id)
-            fields.org_contract_id = mongo.ObjectID(fields.org_contract_id)
+            fields.contract_id = mongo.ObjectID(fields.contract_id)
             let result = await collection.insertOne(fields)
 
             return result
@@ -24,6 +24,7 @@ export default class {
         try {
             let collection = mongo.db.collection('hf_user')
 
+            fields.contract_id = mongo.ObjectID(fields.contract_id)
             let result = await collection.aggregate([
                 { $match:
                         {

@@ -1,5 +1,7 @@
 import Joi from "joi";
 import CHfContract from "../classes/hfContract";
+import CHfUser from "../classes/hfUser";
+import CHf from "../classes/hf";
 
 export default class {
 
@@ -132,21 +134,53 @@ export default class {
             }
             try {
 
+                //люди в договоре
+                let arFields = {
+                    contract_id: value.contract_id
+                }
+                let arUser = await CHfUser.Get ( arFields );
+
+                //массив вредных факторов (с повторами для дальнейших умножений)
+                let arCode = []
+                //у пользователя массив
+                arUser.forEach((item, i) => {
+                    for (let code of item.hf)
+                        arCode.push(code)
+                })
+
+                //вредные факторы (в единичном экземляре)
+                let arHf = await CHf.GetByCode ( arCode )
+                let research = []
+                let specialty = []
+                arHf.forEach((item, i) => {
+
+                    //количество повторов вредных факторов
+                    let count = hfCount(item.code, arCode)
+
+                    //на каждый элемент - количество
+                    for (let item_research of item.research)
+                        research.push({research: item_research, count: count})
+
+                    //на каждый элемент - количество
+                    for (let item_specialty of item.specialty)
+                        specialty.push({specialty: item_specialty, count: count})
+                })
+
+
 
                 /*
-                let fields = {
-                    org_id: value.org_id
-                }
-                let params = {
-                    offset: value.offset,
-                    count: value.count
-                }
-                let result = await CHfContract.Get (fields, params);
-*/
+let arCode = await Promise.all(arUser.map(async (item, i) => {
+    return item.hf;
+}));*/
+
                 ctx.body = {
                     err: 0,
                     response: {
-                        //items: result
+                        items: arUser,
+                        code: arCode,
+                        hf: arHf,
+                        research: research,
+                        specialty: specialty
                     }
                 };
             } catch (err) {
@@ -156,4 +190,14 @@ export default class {
             ctx.body = err;
         }
     }
+}
+
+const hfCount = (code, arCode) => {
+    let i = 0
+
+    arCode.forEach((item) => {
+        if (item === code)
+            i++
+    })
+    return i
 }
