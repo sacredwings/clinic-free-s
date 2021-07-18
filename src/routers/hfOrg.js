@@ -37,7 +37,7 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await COrg.Add ( value );
+                let result = await CHfOrg.Add ( value );
 
                 ctx.body = {
                     err: 0,

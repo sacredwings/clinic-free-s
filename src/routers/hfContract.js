@@ -150,8 +150,11 @@ export default class {
 
                 //вредные факторы (в единичном экземляре)
                 let arHf = await CHf.GetByCode ( arCode )
-                let research = []
-                let specialty = []
+
+                let arHfResearchCount = []
+                let arHfSpecialtyCount = []
+                let arHfOneResearch = []
+                let arHfOneSpecialty = []
                 arHf.forEach((item, i) => {
 
                     //количество повторов вредных факторов
@@ -159,12 +162,101 @@ export default class {
 
                     //на каждый элемент - количество
                     for (let item_research of item.research)
-                        research.push({research: item_research, count: count})
+                        arHfOneResearch.push({...item_research, count: count})
 
                     //на каждый элемент - количество
                     for (let item_specialty of item.specialty)
-                        specialty.push({specialty: item_specialty, count: count})
+                        arHfOneSpecialty.push({...item_specialty, count: count})
+
+                    //---
+                    for (let item_research of item.research) {
+
+                        let exit = false
+
+                        for (let arHfResearch of arHfResearchCount) {
+                            console.log(item_research._id)
+                            console.log(arHfResearch._id)
+
+                            //console.log(item_research)
+                            //console.log(arHfResearch)
+
+                            if (item_research._id.toString() === arHfResearch._id.toString()) {
+                                console.log('!!!!!!!!!!!')
+                                arHfResearch.count += count
+
+                                exit = true
+                                continue
+                            }
+                            console.log('----------------')
+                        }
+
+                        if (exit) continue
+
+                        arHfResearchCount.push({...item_research, count: count})
+
+                    }
+
+                    //---
+                    for (let item_specialty of item.specialty) {
+
+                        let exit = false
+
+                        for (let arHfSpecialty of arHfSpecialtyCount) {
+                            console.log(item_specialty._id)
+                            console.log(arHfSpecialty._id)
+
+                            //console.log(item_research)
+                            //console.log(arHfResearch)
+
+                            if (item_specialty._id.toString() === arHfSpecialty._id.toString()) {
+                                console.log('!!!!!!!!!!!')
+                                arHfSpecialty.count += count
+
+                                exit = true
+                                continue
+                            }
+                            console.log('----------------')
+                        }
+
+                        if (exit) continue
+
+                        arHfSpecialtyCount.push({...item_specialty, count: count})
+
+                    }
+
                 })
+
+                //Объединение в одно
+                let resResearch = []
+                let resSpecialty = []
+
+                let result = arHfOneResearch.reduce((acc, val) => {
+
+                })
+/*
+                arHfOneResearch.forEach((item) => {
+
+                    if (!resResearch.length)
+                        resResearch.push(item)
+
+                    else {
+                        for (let i = 0; i < resResearch.length; i++) {
+                            console.log(item._id)
+                            console.log(resResearch[i]._id)
+                            console.log('---------------')
+                            if (item._id === resResearch[i]._id) {
+                                console.log('совпадение')
+                                resResearch[i].count += item.count
+                                continue
+                            }
+
+                            //resResearch.push(item)
+                        }
+                    }
+
+
+
+                })*/
 
 
 
@@ -179,8 +271,10 @@ let arCode = await Promise.all(arUser.map(async (item, i) => {
                         items: arUser,
                         code: arCode,
                         hf: arHf,
-                        research: research,
-                        specialty: specialty
+                        arHfResearchCount: arHfOneResearch,
+                        arHfSpecialtyCount: arHfOneSpecialty,
+                        research: arHfResearchCount,
+                        specialty: arHfSpecialtyCount
                     }
                 };
             } catch (err) {
@@ -200,4 +294,35 @@ const hfCount = (code, arCode) => {
             i++
     })
     return i
+}
+
+const hfOneCount = (arr) => {
+    let result = []
+
+    for (let itemArr of arr) {
+
+        let exit = false
+
+        for (let itemResult of result) {
+            //console.log(item_research._id)
+            //console.log(arHfResearch._id)
+
+            //console.log(item_research)
+            //console.log(arHfResearch)
+
+            if (itemArr._id.toString() === itemResult._id.toString()) {
+                result.count += count
+
+                exit = true
+                continue
+            }
+        }
+
+        if (exit) continue
+
+        result.push({...itemArr, count: count})
+
+    }
+
+    return result
 }
