@@ -140,6 +140,16 @@ export default class {
                 }
                 let arUser = await CHfUser.Get ( arFields );
 
+                //пользователей нет - выходим
+                if (!arUser.length) {
+                    ctx.body = {
+                        err: 0,
+                        response: {
+                        }
+                    };
+                    return false
+                }
+
                 //массив вредных факторов (с повторами для дальнейших умножений)
                 let arCode = []
                 //у пользователя массив
@@ -226,6 +236,7 @@ export default class {
 
                 })
 
+                console.log('111111111111111')
                 //Объединение в одно
                 let resResearch = []
                 let resSpecialty = []
