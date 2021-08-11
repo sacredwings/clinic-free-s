@@ -45,7 +45,7 @@ routerHfContract.post('/add', routersHfContract.Add)
 routerHfContract.get('/get', routersHfContract.Get)
 routerHfContract.get('/getById', routersHfContract.GetById)
 routerHfContract.get('/statistic', routersHfContract.Statistic)
-
+routerHfContract.get('/statisticByUser', routersHfContract.StatisticByUser)
 
 const routerHfUser = new Router({prefix: '/hf-user'})
 routerHfUser.post('/add', routersHfUser.Add)

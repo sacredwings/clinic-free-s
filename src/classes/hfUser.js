@@ -48,4 +48,35 @@ export default class {
             throw ({...{err: 7001000, msg: 'CHfUser Get'}, ...err})
         }
     }
+
+    static async GetById ( fields ) {
+        try {
+            let collection = mongo.db.collection('hf_user')
+
+            fields.contract_id = mongo.ObjectID(fields.contract_id)
+            fields.user_id = mongo.ObjectID(fields.user_id)
+            let result = await collection.aggregate([
+                { $match:
+                        {
+                            contract_id: fields.contract_id,
+                            user_id: fields.user_id
+                        }
+                },
+                { $lookup:
+                        {
+                            from: 'user',
+                            localField: 'user_id',
+                            foreignField: '_id',
+                            as: 'user'
+                        }
+                }
+            ]).toArray();
+
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfUser GetById'}, ...err})
+        }
+    }
 }

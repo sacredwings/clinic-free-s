@@ -2,6 +2,8 @@ import Joi from "joi";
 import CHfContract from "../classes/hfContract";
 import CHfUser from "../classes/hfUser";
 import CHf from "../classes/hf";
+import CHfResearch from "../classes/hfResearch";
+import CHfSpecialty from "../classes/hfSpecialty";
 
 export default class {
 
@@ -110,6 +112,92 @@ export default class {
                 };
             } catch (err) {
                 throw ({...{err: 10000000, msg: 'RHfOrg GetById'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
+
+    static async StatisticByUser (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    contract_id: Joi.string().min(24).max(24).required(),
+                    user_id: Joi.string().min(24).max(24).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.query);
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+            }
+            try {
+
+                //люди в договоре
+                let arFields = {
+                    contract_id: value.contract_id,
+                    user_id: value.user_id
+                }
+                let arUser = await CHfUser.GetById ( arFields );
+
+                //пользователей нет - выходим
+                if (!arUser.length) {
+                    ctx.body = {
+                        err: 0,
+                        response: {
+                        }
+                    };
+                    return false
+                }
+
+                //массив вредных факторов (с повторами для дальнейших умножений)
+                let arCode = []
+                //у пользователя массив
+                arUser.forEach((item, i) => {
+                    for (let code of item.hf)
+                        arCode.push(code)
+                })
+
+                //вредные факторы (в единичном экземляре)
+                let arHf = await CHf.GetByCode ( arCode )
+
+                //списки
+                let arHfResearch = []
+                let arHfSpecialty = []
+
+                arHf.forEach((item, i) => {
+                    //достаем каждый элемент /в строке обязательно
+                    for (let item_research_id of item.research_id)
+                        arHfResearch.push(item_research_id)
+
+                    for (let item_specialty_id of item.specialty_id)
+                        arHfSpecialty.push(item_specialty_id)
+                })
+
+                //arHfResearch = new Set(arHfResearch);
+                //arHfResearch = new Set(arHfResearch);
+
+                arHfResearch = await CHfResearch.GetById ( arHfResearch )
+                arHfSpecialty = await CHfSpecialty.GetById ( arHfSpecialty )
+
+                ctx.body = {
+                    err: 0,
+                    response: {
+                        user: arUser[0].user[0],
+                        //items: arUser,
+                        //code: arCode,
+                        hf: arUser[0].hf,
+                        //arHfResearchCount: arHfOneResearch,
+                        //arHfSpecialtyCount: arHfOneSpecialty,
+                        research: arHfResearch,
+                        specialty: arHfSpecialty
+                    }
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'COrgContract StatisticByUser'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
