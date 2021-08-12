@@ -35,4 +35,37 @@ export default class {
             throw ({...{err: 7001000, msg: 'CHfResearch GetById'}, ...err})
         }
     }
+
+    static async PriceGet ( fields ) {
+        try {
+            let collection = mongo.db.collection('hf_research');
+
+            if (fields.org_id)
+                fields.org_id = mongo.ObjectID(fields.org_id)
+
+            let result = await collection.aggregate([
+                { $lookup:
+                        {
+                            from: 'hf_price',
+                            localField: '_id',
+                            foreignField: 'research_id',
+                            as: 'price',
+                            pipeline: [
+                                {
+                                    $match:
+                                        {
+                                            org_id: fields.org_id
+                                        }
+                                }
+                            ]
+                        }
+                },
+            ]).toArray();
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfResearch PriceGet'}, ...err})
+        }
+    }
 }

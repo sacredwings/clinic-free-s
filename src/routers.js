@@ -39,6 +39,8 @@ const routerHfOrg = new Router({prefix: '/hf-org'})
 routerHfOrg.post('/add', routersHfOrg.Add)
 routerHfOrg.get('/getById', routersHfOrg.GetById)
 routerHfOrg.get('/get', routersHfOrg.Get)
+routerHfOrg.get('/priceGet', routersHfOrg.PriceGet)
+routerHfOrg.get('/priceEdit', routersHfOrg.PriceEdit)
 
 const routerHfContract = new Router({prefix: '/hf-contract'})
 routerHfContract.post('/add', routersHfContract.Add)

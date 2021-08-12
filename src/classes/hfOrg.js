@@ -39,4 +39,5 @@ export default class {
             throw ({...{err: 7001000, msg: 'CHfOrg Get'}, ...err})
         }
     }
+
 }
