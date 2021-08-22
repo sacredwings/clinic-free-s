@@ -1,6 +1,9 @@
 import Joi from "joi";
 import CHfOrg from "../classes/hfOrg";
 import CHfResearch from "../classes/hfResearch";
+import CHfAnalysis from "../classes/hfAnalysis";
+import CHfSpecialty from "../classes/hfSpecialty";
+
 
 export default class {
 
@@ -128,8 +131,7 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    q: Joi.string().min(3).max(255).allow(null).empty('').default(0),
-                    org_id: Joi.string().min(24).max(24).allow(null).empty('').default(0),
+                    org_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                 });
 
                 value = await schema.validateAsync(ctx.request.query);
@@ -139,12 +141,17 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CHfResearch.PriceGet ({}, value);
+                console.log(value)
+                let resultResearch = await CHfResearch.PriceGet (value);
+                let resultAnalysis = await CHfAnalysis.PriceGet (value);
+                let resultSpecialty = await CHfSpecialty.PriceGet (value);
 
                 ctx.body = {
                     err: 0,
                     response: {
-                        items: result
+                        research: resultResearch,
+                        analysis: resultAnalysis,
+                        specialty: resultSpecialty
                     }
                 };
             } catch (err) {
