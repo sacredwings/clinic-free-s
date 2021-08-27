@@ -32,7 +32,8 @@ export default class {
                                 {
                                     $match:
                                         {
-                                            org_id: fields.org_id
+                                            org_id: fields.org_id,
+                                            contract_id: fields.org_id,
                                         }
                                 }
                             ]

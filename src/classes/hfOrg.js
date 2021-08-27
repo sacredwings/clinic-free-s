@@ -31,8 +31,20 @@ export default class {
     static async Get ( fields, params ) {
         try {
             let collection = mongo.db.collection('hf_org');
-            let result = await collection.find(fields).limit(params.count).skip(params.offset).toArray()
-            return result
+
+            if (!fields.contract)
+                return await collection.find({}).limit(params.count).skip(params.offset).toArray()
+
+            return await collection.aggregate([
+                { $lookup:
+                        {
+                            from: 'hf_contract',
+                            localField: '_id',
+                            foreignField: 'org_id',
+                            as: 'contract'
+                        }
+                },
+            ]).toArray();
 
         } catch (err) {
             console.log(err)

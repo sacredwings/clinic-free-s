@@ -94,6 +94,7 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
+                    contract: Joi.number().integer().min(0).max(1).allow(null).empty('').default(0),
                     offset: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(0),
                     count: Joi.number().integer().min(0).max(200).allow(null).empty('').default(20)
                 });
@@ -105,11 +106,15 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
+                let fields = {
+                    contract: value.contract
+                }
+
                 let params = {
                     offset: value.offset,
                     count: value.count
                 }
-                let result = await CHfOrg.Get ({}, params);
+                let result = await CHfOrg.Get (fields, params);
 
                 ctx.body = {
                     err: 0,
@@ -132,6 +137,7 @@ export default class {
                 //схема
                 const schema = Joi.object({
                     org_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
+                    contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                 });
 
                 value = await schema.validateAsync(ctx.request.query);
