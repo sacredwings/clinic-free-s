@@ -52,4 +52,18 @@ export default class {
         }
     }
 
+    static async PriceEdit ( fields ) {
+        try {
+            let collection = mongo.db.collection('hf_price');
+
+            let result = await collection.find(fields).toArray()
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfOrg PriceEdit'}, ...err})
+        }
+    }
+    PriceEdit
+
 }

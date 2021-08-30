@@ -174,25 +174,9 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    name: Joi.string().min(3).max(255).required(),
-                    full_name: Joi.string().min(3).max(255).allow(null).empty('').default(null),
-
-                    inn: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                    kpp: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                    ogrn: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-
-                    payment_account: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-
-                    post_code: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
-                    country: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    region: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    district: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    locality: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    street: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    house: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    corps: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    structure: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    flat: Joi.number().integer().min(0).max(9223372036854775807).allow(null).empty('').default(null),
+                    contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
+                    object_id: Joi.string().min(24).max(24).required(),
+                    price: Joi.number().integer().min(1).max(999999).required(),
                 });
 
                 value = await schema.validateAsync(ctx.request.body);
@@ -202,7 +186,7 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CHfOrg.Add ( value );
+                let result = await CHfOrg.PriceEdit ( value );
 
                 ctx.body = {
                     err: 0,
