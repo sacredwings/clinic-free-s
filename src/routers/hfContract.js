@@ -16,9 +16,9 @@ export default class {
                     org_id: Joi.string().min(24).max(24).required(),
                     name: Joi.string().min(3).max(255).required(),
 
-                    code: Joi.string().min(1).max(255).allow(null).empty('').default(null),
-                    date_from: Joi.string().min(3).max(255).allow(null).empty('').default(null),
-                    date_to: Joi.string().min(3).max(255).allow(null).empty('').default(null),
+                    date_from: Joi.date().allow(null).empty('').default(null),
+                    date_to: Joi.date().allow(null).empty('').default(null),
+                    price: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
                 });
 
                 value = await schema.validateAsync(ctx.request.body);

@@ -174,6 +174,7 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
+                    org_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                     contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                     object_id: Joi.string().min(24).max(24).required(),
                     price: Joi.number().integer().min(1).max(999999).required(),

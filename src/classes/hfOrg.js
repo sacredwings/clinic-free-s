@@ -56,7 +56,37 @@ export default class {
         try {
             let collection = mongo.db.collection('hf_price');
 
-            let result = await collection.find(fields).toArray()
+            if (fields.org_id)
+                fields.org_id = mongo.ObjectID(fields.org_id)
+
+            if (fields.contract_id)
+                fields.contract_id = mongo.ObjectID(fields.contract_id)
+
+            if (fields.object_id)
+                fields.object_id = mongo.ObjectID(fields.object_id)
+
+
+            let arFields = {
+                org_id: fields.org_id,
+                contract_id: fields.contract_id,
+                object_id: fields.object_id,
+            }
+            let result1 = await collection.find(arFields).toArray()
+
+            console.log(fields)
+            console.log(result1)
+
+            let arFilter = {
+                org_id: fields.org_id,
+                contract_id: fields.contract_id,
+                object_id: fields.object_id,
+            }
+
+            let arUpdate = {
+                price: fields.price,
+            }
+
+            let result = collection.updateOne(arFilter, {$set: arUpdate}, {upsert: true})
             return result
 
         } catch (err) {
