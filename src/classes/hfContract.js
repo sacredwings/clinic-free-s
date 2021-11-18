@@ -7,8 +7,8 @@ export default class {
             let collection = mongo.db.collection('hf_contract');
 
             fields.org_id = mongo.ObjectID(fields.org_id)
-            let result = await collection.insertOne(fields)
-            return result
+            await collection.insertOne(fields)
+            return fields
 
         } catch (err) {
             console.log(err)

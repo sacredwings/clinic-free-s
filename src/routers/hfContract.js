@@ -238,17 +238,12 @@ export default class {
                     return false
                 }
 
-                //массив вредных факторов (с повторами для дальнейших умножений)
-                let arCode = []
-                //у пользователя массив
-                arUser.forEach((item, i) => {
-                    for (let code of item.hf)
-                        arCode.push(code)
-                })
+                //вредные факторы (в единичном экземляре) на всех пользователей
+                let arHf = await hrUsers(arUser)
 
-                //вредные факторы (в единичном экземляре)
-                let arHf = await CHf.GetByCode ( arCode )
-
+                console.log(arHf)
+                console.log(arUser)
+                /*
                 let arHfResearchCount = []
                 let arHfSpecialtyCount = []
                 let arHfOneResearch = []
@@ -322,7 +317,7 @@ export default class {
 
                     }
 
-                })
+                })*/
 
                 console.log('111111111111111')
                 //Объединение в одно
@@ -383,6 +378,28 @@ let arCode = await Promise.all(arUser.map(async (item, i) => {
             ctx.body = err;
         }
     }
+}
+
+const hrUsers = async (arUsers) => {
+    //массив вредных факторов (с повторами для дальнейших умножений)
+    let arCode = []
+    //у пользователя массив
+    arUsers.forEach((item, i) => {
+        for (let code of item.hf)
+            arCode.push(code)
+    })
+
+    //вредные факторы (в единичном экземляре)
+    return await CHf.GetByCode ( arCode )
+}
+
+const hrUserElements = async () => {
+
+}
+
+const hrCode = async (code, arUserCode) => {
+    let research = []
+    let specialty = []
 }
 
 const hfCount = (code, arCode) => {

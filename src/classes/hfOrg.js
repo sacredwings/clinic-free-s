@@ -5,8 +5,8 @@ export default class {
     static async Add ( fields ) {
         try {
             let collection = mongo.db.collection('hf_org');
-            let result = await collection.insertOne(fields)
-            return result
+            await collection.insertOne(fields)
+            return fields
 
         } catch (err) {
             console.log(err)
