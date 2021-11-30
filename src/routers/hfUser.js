@@ -13,7 +13,7 @@ export default class {
                 if (ctx.request.body.hf) ctx.request.body.hf = ctx.request.body.hf.split(',')
                 //схема
                 const schema = Joi.object({
-                    contract_id: Joi.string().min(24).max(24).required(),
+                    contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
 
                     hf: Joi.array().min(1).max(100).required(),
 
@@ -101,6 +101,7 @@ export default class {
                     work_place: value.work_place,
                     work_experience: value.work_experience,
                 }
+                console.log(fields)
                 let hfUser = await CHfUser.Add ( fields );
 
                 ctx.body = {
@@ -121,7 +122,7 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    contract_id: Joi.string().min(24).max(24).required(),
+                    contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
                 });
                 value = await schema.validateAsync(ctx.request.query);
 

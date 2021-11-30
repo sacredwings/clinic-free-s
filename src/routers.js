@@ -13,6 +13,7 @@ import routersHfSpecialty from './routers/hfSpecialty'
 import routersHfOrg from './routers/hfOrg'
 import routersHfContract from './routers/hfContract'
 import routersHfUser from './routers/hfUser'
+import routersHfPrice from './routers/hfPrice'
 
 const routerInit = new Router({prefix: '/init'})
 routerInit.post('/hf', routersInit.Hf)
@@ -39,19 +40,26 @@ const routerHfOrg = new Router({prefix: '/hf-org'})
 routerHfOrg.post('/add', routersHfOrg.Add)
 routerHfOrg.get('/getById', routersHfOrg.GetById)
 routerHfOrg.get('/get', routersHfOrg.Get)
-routerHfOrg.get('/priceGet', routersHfOrg.PriceGet)
-routerHfOrg.post('/priceEdit', routersHfOrg.PriceEdit)
+//routerHfOrg.get('/priceGet', routersHfOrg.PriceGet)
+//routerHfOrg.post('/priceEdit', routersHfOrg.PriceEdit)
+//routerHfOrg.get('/pdfUser', routersHfOrg.PdfUser)
 
 const routerHfContract = new Router({prefix: '/hf-contract'})
 routerHfContract.post('/add', routersHfContract.Add)
 routerHfContract.get('/get', routersHfContract.Get)
 routerHfContract.get('/getById', routersHfContract.GetById)
-routerHfContract.get('/statistic', routersHfContract.Statistic)
-routerHfContract.get('/statisticByUser', routersHfContract.StatisticByUser)
+//routerHfContract.get('/statistic', routersHfContract.Statistic)
+//routerHfContract.get('/statisticByUser', routersHfContract.StatisticByUser)
 
 const routerHfUser = new Router({prefix: '/hf-user'})
 routerHfUser.post('/add', routersHfUser.Add)
 routerHfUser.get('/get', routersHfUser.Get)
+
+const routerHfPrice = new Router({prefix: '/hf-price'})
+routerHfPrice.get('/get', routersHfPrice.Get)
+routerHfPrice.post('/edit', routersHfPrice.Edit)
+routerHfPrice.post('/editUserFiz', routersHfPrice.EditUserFiz)
+
 
 //объединеный, общий маршрут
 const router = new Router()
@@ -65,6 +73,7 @@ router.use(
     routerHfOrg.routes(),
     routerHfContract.routes(),
     routerHfUser.routes(),
+    routerHfPrice.routes(),
 
 );
 export default router

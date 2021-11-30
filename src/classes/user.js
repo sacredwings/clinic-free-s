@@ -29,7 +29,7 @@ export default class {
 
             let collection = mongo.db.collection('user')
 
-            fields.org_contract_id = mongo.ObjectID(fields.org_contract_id)
+            //fields.org_contract_id = mongo.ObjectID(fields.org_contract_id)
             let result = await collection.insertOne(fields)
 
             return result

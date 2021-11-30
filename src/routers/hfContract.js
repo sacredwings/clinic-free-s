@@ -85,6 +85,7 @@ export default class {
         }
     }
 
+
     static async GetById (ctx, next) {
         let value;
         try {
@@ -117,7 +118,7 @@ export default class {
             ctx.body = err;
         }
     }
-
+/*
     static async StatisticByUser (ctx, next) {
         let value;
         try {
@@ -318,7 +319,7 @@ export default class {
                     }
 
                 })*/
-
+/*
                 console.log('111111111111111')
                 //Объединение в одно
                 let resResearch = []
@@ -326,7 +327,7 @@ export default class {
 
                 let result = arHfOneResearch.reduce((acc, val) => {
 
-                })
+                })*/
 /*
                 arHfOneResearch.forEach((item) => {
 
@@ -358,7 +359,7 @@ export default class {
 let arCode = await Promise.all(arUser.map(async (item, i) => {
     return item.hf;
 }));*/
-
+/*
                 ctx.body = {
                     err: 0,
                     response: {
@@ -377,7 +378,7 @@ let arCode = await Promise.all(arUser.map(async (item, i) => {
         } catch (err) {
             ctx.body = err;
         }
-    }
+    }*/
 }
 
 const hrUsers = async (arUsers) => {
