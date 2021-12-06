@@ -10,6 +10,7 @@ export default class {
         let value;
         try {
             try {
+                ctx.request.body.hf = ctx.request.body.hf.split(' ').join('')
                 if (ctx.request.body.hf) ctx.request.body.hf = ctx.request.body.hf.split(',')
                 //схема
                 const schema = Joi.object({

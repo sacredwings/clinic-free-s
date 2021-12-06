@@ -8,20 +8,22 @@ export default async function (path, options1) {
     const html = await ejs.renderFile('C:/Node/clinic-free-s/src/template/test.ejs', {xxx: 'работает'}, {async: true})
 
     const options = { format: 'A4'};
-    const fileName = __dirname + '/file.pdf';
+    const fileName = 'pdf.pdf'
 
-    let rrr = await pdfCreate(html, options)
-    console.log(rrr)
-
+    return await pdfCreate(html, options, fileName)
 }
 
 
 
-function pdfCreate (html, options) {
+function pdfCreate (html, options, fileName) {
+    const filePath = `C:\\Node\\clinic-free-s\\public\\${fileName}`
     return new Promise(function(resolve, reject) {
-        htmlPdf.create(html, options).toFile('./businesscard.pdf', function(err, res) {
+        htmlPdf.create(html, options).toFile(filePath, function(err, res) {
             if (err) return reject(err);
-            resolve(res.filename)
+            resolve({
+                path: res.filename,
+                name: fileName
+            })
         })
     });
 }

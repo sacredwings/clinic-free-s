@@ -2,12 +2,18 @@
 //Основной модуль
 import Koa from 'koa'
 
+global.__dirname = __dirname
+
 //Парсер
 import cookie from 'koa-cookie';
 import koaBody from 'koa-body';
 
 //Кросдоменный запрос
 import cors from '@koa/cors';
+
+//Для статичных файлов
+import serve from 'koa-static' /* Подключение статичных файлов */
+import mount from 'koa-mount'  /* Подмена/дополнение путей к фалам */
 
 //Подключение маршрутов / API
 import routers from "./routers";
@@ -24,6 +30,11 @@ app.use(cors()); /* Кросдоменный запрос */
 app.use(cookie()); /* Парсер куки */
 app.use(koaBody());
 app.use(routers.routes()); /* Маршруты */
+
+//Загреженные файлы
+const filesStatic = new Koa()
+filesStatic.use(serve('./public'))
+app.use(mount('/files', filesStatic))
 
 //запуск сервера
 app.listen(config.server.port);

@@ -130,28 +130,22 @@ export default class {
             ctx.body = err;
         }
     }
-/*
 
     static async PdfUser (ctx, next) {
         let value;
         try {
             try {
-
+                name: Joi.string().required()
             } catch (err) {
                 console.log(err)
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-
-                console.log('111111111111111')
-                let xxx = await pdf('../template/test.ejs')
-                console.log(xxx)
+                let pdfName = await pdf('../template/test.ejs')
 
                 ctx.body = {
                     err: 0,
-                    response: {
-                        //items: result
-                    }
+                    response: `files/${pdfName.name}`
                 };
             } catch (err) {
                 throw ({...{err: 10000000, msg: 'ROrg Get'}, ...err});
@@ -159,5 +153,5 @@ export default class {
         } catch (err) {
             ctx.body = err;
         }
-    }*/
+    }
 }
