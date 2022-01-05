@@ -22,7 +22,7 @@ import routers from "./routers";
 import config from "./config.json";
 
 //Модуль для работы с базой
-import mongo from 'mongodb';
+import { DB } from 'social-framework/build/classes/db';
 
 //ЗАПУСК МОДУЛЕЙ
 const app = new Koa(); /* Основной модуль */
@@ -42,8 +42,20 @@ app.listen(config.server.port);
 Start().then().catch();
 async function Start () {
     console.log('Работаю')
-    //Сохраняем коннект
-    let connect = await mongo.MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true })
-    mongo.db = await connect.db('clinic')
+
+    const dbName = 'clinic'
+    const parameters = {
+        host: '',
+        port: '',
+        login: '',
+        password: '',
+        source: 'admin'
+    }
+
+    //с ожиданием
+    DB.Client = await new DB().Init(parameters, dbName)
+
+    //let connect = await mongo.MongoClient('mongodb://localhost:27017', { useUnifiedTopology: true })
+    //mongo.db = await connect.db('clinic')
 
 }

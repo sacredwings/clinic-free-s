@@ -1,10 +1,11 @@
-import mongo from "mongodb";
+//Модуль для работы с базой
+import { DB } from 'social-framework/build/classes/db';
 
 export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = mongo.db.collection('hf');
+            let collection = DB.Client.collection('hf');
             let result = await collection.findOne(fields)
 
             return result
@@ -17,7 +18,7 @@ export default class {
 
     static async GetByCode ( arCode ) {
         try {
-            let collection = mongo.db.collection('hf');
+            let collection = DB.Client.collection('hf');
 
             let result = await collection.aggregate([
                 { $match:

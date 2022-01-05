@@ -1,10 +1,11 @@
 import mongo from "mongodb";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_org');
+            let collection = DB.Client.collection('hf_org');
             await collection.insertOne(fields)
             return fields
 
@@ -16,9 +17,9 @@ export default class {
 
     static async GetById ( fields ) {
         try {
-            fields._id = mongo.ObjectID(fields._id)
+            fields._id = new DB().ObjectID(fields._id)
 
-            let collection = mongo.db.collection('hf_org');
+            let collection = DB.Client.collection('hf_org');
             let result = await collection.find(fields).toArray()
             return result
 
@@ -30,7 +31,7 @@ export default class {
 
     static async Get ( fields, params ) {
         try {
-            let collection = mongo.db.collection('hf_org');
+            let collection = DB.Client.collection('hf_org');
 
             if (!fields.contract)
                 return await collection.find({}).limit(params.count).skip(params.offset).toArray()
@@ -54,16 +55,16 @@ export default class {
 
     static async PriceEdit ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_price');
+            let collection = DB.Client.collection('hf_price');
 
             if (fields.org_id)
-                fields.org_id = mongo.ObjectID(fields.org_id)
+                fields.org_id = new DB().ObjectID(fields.org_id)
 
             if (fields.contract_id)
-                fields.contract_id = mongo.ObjectID(fields.contract_id)
+                fields.contract_id = new DB().ObjectID(fields.contract_id)
 
             if (fields.object_id)
-                fields.object_id = mongo.ObjectID(fields.object_id)
+                fields.object_id = new DB().ObjectID(fields.object_id)
 
 
             let arFields = {

@@ -1,10 +1,11 @@
 import mongo from "mongodb";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_analysis');
+            let collection = DB.Client.collection('hf_analysis');
             let result = await collection.findOne(fields)
 
             return result

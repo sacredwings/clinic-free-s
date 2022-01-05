@@ -1,4 +1,5 @@
 import mongo from "mongodb";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
 /*
@@ -19,7 +20,7 @@ export default class {
         try {
             //fields._id = mongo.ObjectID(fields._id)
 
-            let collection = mongo.db.collection('hf_research');
+            let collection = DB.Client.collection('hf_research');
             let result = await collection.aggregate([
                 { $match:
                         {

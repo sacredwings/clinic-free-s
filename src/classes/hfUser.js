@@ -1,14 +1,15 @@
 import mongo from 'mongodb';
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_user')
+            let collection = DB.Client.collection('hf_user')
 
-            fields.user_id = mongo.ObjectID(fields.user_id)
+            fields.user_id = new DB().ObjectID(fields.user_id)
             //fields.contract_id = mongo.ObjectID(fields.contract_id)
             let result = await collection.insertOne(fields)
 
@@ -22,10 +23,10 @@ export default class {
 
     static async Get ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_user')
+            let collection = DB.Client.collection('hf_user')
 
             if (fields.contract_id)
-                fields.contract_id = mongo.ObjectID(fields.contract_id)
+                fields.contract_id = new DB().ObjectID(fields.contract_id)
 
             let result = await collection.aggregate([
                 { $match:
@@ -53,10 +54,10 @@ export default class {
 
     static async GetById ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_user')
+            let collection = DB.Client.collection('hf_user')
 
-            fields.contract_id = mongo.ObjectID(fields.contract_id)
-            fields.user_id = mongo.ObjectID(fields.user_id)
+            fields.contract_id = new DB().ObjectID(fields.contract_id)
+            fields.user_id = new DB().ObjectID(fields.user_id)
             let result = await collection.aggregate([
                 { $match:
                         {

@@ -1,10 +1,11 @@
 import mongo from "mongodb";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
 
     static async Add ( fields ) {
         try {
-            let collection = mongo.db.collection('hf_specialty');
+            let collection = DB.Client.collection('hf_specialty');
             let result = await collection.findOne(fields)
 
             return result
@@ -19,7 +20,7 @@ export default class {
         try {
             //fields._id = mongo.ObjectID(fields._id)
 
-            let collection = mongo.db.collection('hf_specialty');
+            let collection = DB.Client.collection('hf_specialty');
             let result = await collection.aggregate([
                 { $match:
                         {

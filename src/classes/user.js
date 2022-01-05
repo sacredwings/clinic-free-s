@@ -1,6 +1,7 @@
 import mongo from 'mongodb';
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
 
@@ -46,7 +47,7 @@ export default class {
             //в нижний регистр
             login = login.toLowerCase()
 
-            let collection = mongo.db.collection('user');
+            let collection = DB.Client.collection('user');
             let result = await collection.findOne({login: login})
 
             return result

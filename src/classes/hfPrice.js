@@ -1,4 +1,5 @@
 import mongo from "mongodb";
+import {DB} from "social-framework/build/classes/db";
 
 export default class {
     static async Get(contract_id, object) {
@@ -6,14 +7,14 @@ export default class {
             let collectionName = 'hf_' + object
             let collectionPrice = 'hf_price'
 
-            let collection = mongo.db.collection(collectionName);
+            let collection = DB.Client.collection(collectionName);
 
             //hf_research
             //hf_specialty
             //hf_analysis
 
             if (contract_id)
-                contract_id = mongo.ObjectID(contract_id)
+                contract_id = DB.ObjectID(contract_id)
 
             let result = await collection.aggregate([
                 { $lookup:

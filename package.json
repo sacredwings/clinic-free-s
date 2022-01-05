@@ -11,26 +11,27 @@
   "license": "ISC",
   "dependencies": {
     "@koa/cors": "^3.1.0",
-    "axios": "^0.21.1",
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "crypto": "^1.0.1",
     "ejs": "^3.1.6",
     "html-pdf": "^3.0.1",
-    "joi": "^17.4.0",
-    "koa": "^2.13.1",
+    "joi": "^17.5.0",
+    "koa": "^2.13.4",
     "koa-body": "^4.2.0",
     "koa-cookie": "^1.0.0",
     "koa-mount": "^4.0.0",
     "koa-range": "^0.3.0",
-    "koa-router": "^10.0.0",
+    "koa-router": "^10.1.1",
     "koa-static": "^5.0.0",
-    "mongodb": "^3.6.4",
-    "nodemailer": "^6.4.17"
+    "mongodb": "^4.2.2",
+    "nodemailer": "^6.7.2",
+    "social-framework": "^0.0.15"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.13",
-    "@babel/node": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
-    "nodemon": "^2.0.7"
+    "@babel/core": "^7.16.7",
+    "@babel/node": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "nodemon": "^2.0.15"
   }
 }
