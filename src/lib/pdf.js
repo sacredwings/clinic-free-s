@@ -5,9 +5,12 @@ import ejs from "ejs";
 export default async function (path, options1) {
     //let template = fs.readFileSync(path, 'utf8');
 
-    const html = await ejs.renderFile('C:/Node/clinic-free-s/src/template/test.ejs', {xxx: 'работает'}, {async: true})
+    const html = await ejs.renderFile(path, {xxx: 'работает'}, {async: true})
 
-    const options = { format: 'A4'};
+    const options = {
+        format: 'A4',
+        "orientation": "landscape", // portrait or landscape
+    }
     const fileName = 'pdf.pdf'
 
     return await pdfCreate(html, options, fileName)

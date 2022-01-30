@@ -135,13 +135,19 @@ export default class {
         let value;
         try {
             try {
-                name: Joi.string().required()
+                //схема
+                const schema = Joi.object({
+                    type: Joi.string().required()
+                });
+
+                value = await schema.validateAsync(ctx.request.query);
             } catch (err) {
                 console.log(err)
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let pdfName = await pdf('../template/test.ejs')
+                console.log(value)
+                let pdfName = await pdf(`C:/Node/clinic-free-s/src/template/${value.type}.ejs`)
 
                 ctx.body = {
                     err: 0,
