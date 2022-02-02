@@ -26,7 +26,7 @@
     "koa-static": "^5.0.0",
     "mongodb": "^4.2.2",
     "nodemailer": "^6.7.2",
-    "social-framework": "^0.0.15"
+    "social-framework": "^0.0.19"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",

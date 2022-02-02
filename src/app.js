@@ -44,17 +44,12 @@ async function Start () {
     console.log('Работаю')
 
     const dbName = 'clinic'
-    const parameters = {
-        host: '',
-        port: '',
-        login: '',
-        password: '',
-        source: 'admin'
-    }
+    const url = 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
 
     //с ожиданием
-    DB.Client = await new DB().Init(parameters, dbName)
+    DB.Client = await new DB().Init(url, dbName)
 
+    //console.log(DB.Client)
     //let connect = await mongo.MongoClient('mongodb://localhost:27017', { useUnifiedTopology: true })
     //mongo.db = await connect.db('clinic')
 

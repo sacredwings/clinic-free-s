@@ -28,7 +28,7 @@ export default class {
                 fields.password = await bcrypt.hash(fields.password, passwordSalt);
             }
 
-            let collection = mongo.db.collection('user')
+            let collection = DB.Client.collection('user')
 
             //fields.org_contract_id = mongo.ObjectID(fields.org_contract_id)
             let result = await collection.insertOne(fields)
