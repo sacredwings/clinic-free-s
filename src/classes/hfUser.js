@@ -10,7 +10,7 @@ export default class {
             let collection = DB.Client.collection('hf_user')
 
             fields.user_id = new DB().ObjectID(fields.user_id)
-            //fields.contract_id = mongo.ObjectID(fields.contract_id)
+            fields.contract_id = new DB().ObjectID(fields.contract_id)
             let result = await collection.insertOne(fields)
 
             return result

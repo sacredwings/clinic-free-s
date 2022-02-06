@@ -102,7 +102,6 @@ export default class {
                     work_place: value.work_place,
                     work_experience: value.work_experience,
                 }
-                console.log(fields)
                 let hfUser = await CHfUser.Add ( fields );
 
                 ctx.body = {
