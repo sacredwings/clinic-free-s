@@ -2028,7 +2028,7 @@ export default class {
                 ]
 
                 arHarmfulFactor = arHarmfulFactor.map((item, i)=>{
-                    return {code: item[0], research_id: item[1], specialty_id: item[2], name: item[3]}
+                    return {code: item[0], research_id: item[1], specialist_id: item[2], name: item[3]}
                 })
 
                 let collectionHarmfulFactor = DB.Client.collection('hf')

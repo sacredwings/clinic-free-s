@@ -48,10 +48,10 @@ export default class {
                 },
                 { $lookup:
                         {
-                            from: 'hf_specialty',
-                            localField: 'specialty_id',
+                            from: 'hf_specialist',
+                            localField: 'specialist_id',
                             foreignField: '_id',
-                            as: 'specialty'
+                            as: 'specialist'
                         }
                 }
             ]).toArray();

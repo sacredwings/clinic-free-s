@@ -30,6 +30,7 @@ routerHf.get('/get', routersHf.Get)
 
 const routerHfSpecialist = new Router({prefix: '/hf-specialist'})
 routerHfSpecialist.post('/add', routersHfSpecialist.Add)
+routerHfSpecialist.post('/update', routersHfSpecialist.Update)
 routerHfSpecialist.get('/get', routersHfSpecialist.Get)
 
 const routerHfResearch = new Router({prefix: '/hf-research'})
