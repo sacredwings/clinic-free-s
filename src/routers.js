@@ -35,6 +35,7 @@ routerHfSpecialist.get('/get', routersHfSpecialist.Get)
 
 const routerHfResearch = new Router({prefix: '/hf-research'})
 routerHfResearch.post('/add', routersHfResearch.Add)
+routerHfResearch.post('/update', routersHfResearch.Update)
 routerHfResearch.get('/get', routersHfResearch.Get)
 
 /*
