@@ -7,9 +7,8 @@ import routersAuth from './routers/auth'
 import routersUser from './routers/user'
 
 import routersHfResearch from './routers/hfResearch.js'
-import routersHfAnalysis from './routers/hfAnalysis'
-import routersHfSpecialty from './routers/hfSpecialty'
-
+import routersHfSpecialist from './routers/hfSpecialist'
+import routersHf from './routers/hf'
 import routersHfOrg from './routers/hfOrg'
 import routersHfContract from './routers/hfContract'
 import routersHfUser from './routers/hfUser'
@@ -24,6 +23,18 @@ routerAuth.post('/login', routersAuth.Login)
 
 const routerUser = new Router({prefix: '/user'})
 routerUser.post('/add', routersUser.Add)
+
+const routerHf = new Router({prefix: '/hf'})
+routerHf.post('/add', routersHf.Add)
+routerHf.get('/get', routersHf.Get)
+
+const routerHfSpecialist = new Router({prefix: '/hf-specialist'})
+routerHfSpecialist.post('/add', routersHfSpecialist.Add)
+routerHfSpecialist.get('/get', routersHfSpecialist.Get)
+
+const routerHfResearch = new Router({prefix: '/hf-research'})
+routerHfResearch.post('/add', routersHfResearch.Add)
+routerHfResearch.get('/get', routersHfResearch.Get)
 
 /*
 const routerResearch = new Router({prefix: '/hf-research'})
@@ -74,6 +85,9 @@ router.use(
     routerHfContract.routes(),
     routerHfUser.routes(),
     routerHfPrice.routes(),
+    routerHf.routes(),
 
+    routerHfSpecialist.routes(),
+    routerHfResearch.routes(),
 );
 export default router

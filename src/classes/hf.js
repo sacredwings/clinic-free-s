@@ -16,6 +16,18 @@ export default class {
         }
     }
 
+    static async Get (  ) {
+        try {
+            let collection = DB.Client.collection('hf');
+
+            return await collection.find().toArray();
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHarmfulFactor Get'}, ...err})
+        }
+    }
+
     static async GetByCode ( arCode ) {
         try {
             let collection = DB.Client.collection('hf');

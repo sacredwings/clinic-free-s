@@ -1,5 +1,5 @@
 import Joi from "joi";
-import CHarmfulFactor from "../classes/hf";
+import CHfSpecialist from "../classes/hfSpecialist";
 
 export default class {
 
@@ -9,10 +9,8 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    code: Joi.string().min(1).max(255).required(),
-                    name: Joi.string().min(1).max(255).required(),
-                    //specialty_ids: Joi.array().min(1).max(200).items(Joi.string().min(12).max(12)).required(),
-                    //research_ids: Joi.array().min(1).max(200).items(Joi.string().min(12).max(12)).required()
+                    name: Joi.string().max(255).required()
+                    //price_prof: Joi.number().integer().min(0).max(999999999).allow(null).empty('').default(null)
                 });
 
                 value = await schema.validateAsync(ctx.request.body);
@@ -22,14 +20,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CHarmfulFactor.Add ( value );
+                let result = await CHfSpecialist.Add ( value );
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RHarmfulFactor Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfSpecialty Add'}, ...err});
             }
         } catch (err) {
             ctx.body = err;
@@ -39,7 +37,7 @@ export default class {
         let value;
         try {
             try {
-                let result = await CHarmfulFactor.Get ()
+                let result = await CHfSpecialist.Get ()
 
                 ctx.body = {
                     err: 0,
@@ -48,7 +46,7 @@ export default class {
                     }
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RHarmfulFactor Get'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfSpecialty Get'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

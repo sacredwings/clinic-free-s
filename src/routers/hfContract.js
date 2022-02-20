@@ -2,8 +2,6 @@ import Joi from "joi";
 import CHfContract from "../classes/hfContract";
 import CHfUser from "../classes/hfUser";
 import CHf from "../classes/hf";
-import CHfResearch from "../classes/hfResearch";
-import CHfSpecialty from "../classes/hfSpecialty";
 
 export default class {
 

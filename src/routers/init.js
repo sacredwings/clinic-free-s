@@ -1,4 +1,4 @@
-import mongo from 'mongodb';
+import { DB } from 'social-framework/build/classes/db';
 
 export default class {
 
@@ -6,7 +6,7 @@ export default class {
         let value;
         try {
             try {
-                let collection = mongo.db.collection('hf_specialty')
+                let collection = DB.Client.collection('hf_specialist')
 
                 let arSpecialty = [
                     ['Дерматовенеролог ',0],
@@ -24,8 +24,7 @@ export default class {
 
                 await collection.insert(arSpecialty)
 
-
-                collection = mongo.db.collection('hf_research')
+                collection = DB.Client.collection('hf_research')
                 let arResearch = [
                     ['Спирометрия ',0],
                     ['Пульсоксиметрия ',0],
@@ -2029,10 +2028,10 @@ export default class {
                 ]
 
                 arHarmfulFactor = arHarmfulFactor.map((item, i)=>{
-                    return {code: item[0], research_id: item[1], specialty_id: item[2]}
+                    return {code: item[0], research_id: item[1], specialty_id: item[2], name: item[3]}
                 })
 
-                let collectionHarmfulFactor = mongo.db.collection('hf')
+                let collectionHarmfulFactor = DB.Client.collection('hf')
                 await collectionHarmfulFactor.insert(arHarmfulFactor)
 
                 ctx.body = {

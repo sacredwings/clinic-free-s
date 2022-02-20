@@ -34,4 +34,23 @@ export default class {
             ctx.body = err;
         }
     }
+    static async Get (ctx, next) {
+        let value;
+        try {
+            try {
+                let result = await CHfResearch.Get ()
+
+                ctx.body = {
+                    err: 0,
+                    response: {
+                        items: result
+                    }
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'RHfSpecialty Get'}, ...err});
+            }
+        } catch (err) {
+            ctx.body = err;
+        }
+    }
 }

@@ -1,8 +1,5 @@
 import Joi from "joi";
 import CHfOrg from "../classes/hfOrg";
-import CHfResearch from "../classes/hfResearch";
-import CHfAnalysis from "../classes/hfAnalysis";
-import CHfSpecialty from "../classes/hfSpecialty";
 import pdf from "../lib/pdf";
 
 export default class {
