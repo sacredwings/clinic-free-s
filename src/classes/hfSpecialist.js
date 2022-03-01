@@ -6,9 +6,8 @@ export default class {
     static async Add ( fields ) {
         try {
             let collection = DB.Client.collection('hf_specialist');
-            let result = await collection.findOne(fields)
-
-            return result
+            let result = await collection.insertOne(fields)
+            return fields
 
         } catch (err) {
             console.log(err)
@@ -27,11 +26,25 @@ export default class {
             throw ({...{err: 7001000, msg: 'CHfSpecialist Get'}, ...err})
         }
     }
-    static async Update ( fields ) {
+    static async Update ( id, fields ) {
+        try {
+            let collection = DB.Client.collection('hf_specialist');
+            id = new DB().ObjectID(id)
+
+            let result = collection.updateOne({_id: id}, {$set: fields})
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfSpecialist Update'}, ...err})
+        }
+    }
+
+    static async UpdateHf ( fields ) {
         try {
             fields.hf_id = new DB().ObjectID(fields.hf_id)
             fields.id = new DB().ObjectID(fields.id)
-            let collection = DB.Client.collection('hf');
+            let collection = DB.Client.collection('hf_specialist');
 
             //поиск
             let arFields = {
@@ -55,8 +68,21 @@ export default class {
 
         } catch (err) {
             console.log(err)
-            throw ({...{err: 7001000, msg: 'CHfSpecialist Get'}, ...err})
+            throw ({...{err: 7001000, msg: 'CHfSpecialist UpdateHf'}, ...err})
         }
     }
 
+    static async Delete ( id ) {
+        try {
+            let collection = DB.Client.collection('hf_specialist');
+            id = new DB().ObjectID(id)
+
+            let result = collection.deleteOne({_id : id})
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfSpecialist Delete'}, ...err})
+        }
+    }
 }

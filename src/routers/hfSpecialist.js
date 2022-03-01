@@ -1,5 +1,6 @@
 import Joi from "joi";
 import CHfSpecialist from "../classes/hfSpecialist";
+import CHarmfulFactor from "../classes/hf";
 
 export default class {
 
@@ -9,28 +10,28 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    name: Joi.string().max(255).required()
+                    name: Joi.string().min(1).max(255).required()
                     //price_prof: Joi.number().integer().min(0).max(999999999).allow(null).empty('').default(null)
                 });
 
-                value = await schema.validateAsync(ctx.request.body);
+                value = await schema.validateAsync(ctx.request.body)
 
             } catch (err) {
                 console.log(err)
-                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
             }
             try {
-                let result = await CHfSpecialist.Add ( value );
+                let result = await CHfSpecialist.Add ( value )
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RHfSpecialist Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfSpecialist Add'}, ...err})
             }
         } catch (err) {
-            ctx.body = err;
+            ctx.body = err
         }
     }
     static async Get (ctx, next) {
@@ -46,13 +47,13 @@ export default class {
                     }
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RHfSpecialist Get'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfSpecialist Get'}, ...err})
             }
         } catch (err) {
-            ctx.body = err;
+            ctx.body = err
         }
     }
-    static async Update (ctx, next) {
+    static async UpdateHf (ctx, next) {
         let value;
         try {
             try {
@@ -62,24 +63,89 @@ export default class {
                     id: Joi.string().max(24).max(24).required(),
                 });
 
-                value = await schema.validateAsync(ctx.request.body);
+                value = await schema.validateAsync(ctx.request.body)
 
             } catch (err) {
                 console.log(err)
-                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
             }
             try {
-                let result = await CHfSpecialist.Update ( value );
+                let result = await CHfSpecialist.UpdateHf ( value )
 
                 ctx.body = {
                     err: 0,
                     response: result
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RHfSpecialist Add'}, ...err});
+                throw ({...{err: 10000000, msg: 'RHfSpecialist Add'}, ...err})
             }
         } catch (err) {
-            ctx.body = err;
+            ctx.body = err
+        }
+    }
+    static async Update (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    _id: Joi.string().min(24).max(24).required(),
+                    name: Joi.string().min(1).max(255).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.body)
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
+            }
+            try {
+                let arFields = {
+                    name: value.name
+                }
+                let result = await CHfSpecialist.Update ( value._id, arFields )
+
+                ctx.body = {
+                    err: 0,
+                    response: result
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'RHfSpecialist Update'}, ...err})
+            }
+        } catch (err) {
+            ctx.body = err
+        }
+    }
+    static async Delete (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    _id: Joi.string().min(24).max(24).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.body)
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
+            }
+            try {
+                let arFields = {
+                    name: value.name
+                }
+                let result = await CHfSpecialist.Delete ( value._id )
+
+                ctx.body = {
+                    err: 0,
+                    response: result
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'RHfSpecialist Delete'}, ...err})
+            }
+        } catch (err) {
+            ctx.body = err
         }
     }
 }

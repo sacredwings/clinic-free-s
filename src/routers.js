@@ -27,16 +27,22 @@ routerUser.post('/add', routersUser.Add)
 const routerHf = new Router({prefix: '/hf'})
 routerHf.post('/add', routersHf.Add)
 routerHf.get('/get', routersHf.Get)
+routerHf.post('/update', routersHf.Update)
+routerHf.post('/delete', routersHf.Delete)
 
 const routerHfSpecialist = new Router({prefix: '/hf-specialist'})
 routerHfSpecialist.post('/add', routersHfSpecialist.Add)
 routerHfSpecialist.post('/update', routersHfSpecialist.Update)
+routerHfSpecialist.post('/update-hf', routersHfSpecialist.UpdateHf)
 routerHfSpecialist.get('/get', routersHfSpecialist.Get)
+routerHfSpecialist.post('/delete', routersHfSpecialist.Delete)
 
 const routerHfResearch = new Router({prefix: '/hf-research'})
 routerHfResearch.post('/add', routersHfResearch.Add)
 routerHfResearch.post('/update', routersHfResearch.Update)
+routerHfResearch.post('/update-hf', routersHfResearch.UpdateHf)
 routerHfResearch.get('/get', routersHfResearch.Get)
+routerHfResearch.post('/delete', routersHfResearch.Delete)
 
 /*
 const routerResearch = new Router({prefix: '/hf-research'})
