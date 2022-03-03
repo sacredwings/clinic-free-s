@@ -52,17 +52,17 @@ export default class {
         }
     }
 
-    static async GetById ( fields ) {
+    static async GetById ( ids ) {
         try {
             let collection = DB.Client.collection('hf_user')
 
-            fields.contract_id = new DB().ObjectID(fields.contract_id)
-            fields.user_id = new DB().ObjectID(fields.user_id)
+            //fields.contract_id = new DB().ObjectID(fields.contract_id)
+            ids = new DB().arObjectID(ids)
             let result = await collection.aggregate([
                 { $match:
                         {
-                            contract_id: fields.contract_id,
-                            user_id: fields.user_id
+                            //contract_id: fields.contract_id,
+                            user_id: { $in: ids}
                         }
                 },
                 { $lookup:
@@ -70,9 +70,15 @@ export default class {
                             from: 'user',
                             localField: 'user_id',
                             foreignField: '_id',
-                            as: 'user'
+                            as: '_user'
                         }
-                }
+                },
+                { $unwind:
+                        {
+                            path: '$_user',
+                            preserveNullAndEmptyArrays: true
+                        }
+                },
             ]).toArray();
 
             return result

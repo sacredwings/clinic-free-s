@@ -1,8 +1,11 @@
 import Joi from "joi";
 import Config from "../config.json";
 import CUser from "../classes/user";
-import CHfUser from "../classes/hfUser";
-import CAuth from "../classes/auth";
+import CHfUser from "../classes/hfUser"
+import CHfContract from "../classes/hfContract"
+import CHf from "../classes/hf"
+import CHfResearch from "../classes/hfResearch"
+import CHfSpecialist from "../classes/hfSpecialist"
 
 export default class {
 
@@ -56,9 +59,31 @@ export default class {
 
             } catch (err) {
                 console.log(err)
-                throw ({err: 412, msg: 'Неверные параметры'});
+                throw ({err: 412, msg: 'Неверные параметры'})
             }
             try {
+                let price = null
+                let arResearch = []
+                let arSpecialist = []
+
+                //загрузка договора
+                let hfContract = await CHfContract.GetById ([value.contract_id])
+                if (!hfContract.length) throw ({err: 30100000, msg: 'Договор не найден'})
+                hfContract = hfContract[0]
+
+                //достаем цену
+                if (hfContract.type === 'one') price = hfContract.price
+
+                let arHf = await CHf.GetByCode (value.hf)
+
+                for (let hf of arHf) {
+                    arResearch = [...arResearch, ...hf.research_id]
+                    arSpecialist = [...arSpecialist, ...hf.specialist_id]
+                }
+
+                arResearch = await CHfResearch.GetById (arResearch)
+                arSpecialist = await CHfSpecialist.GetById (arSpecialist)
+
                 let fields = {
                     first_name: value.first_name,
                     last_name: value.last_name,
@@ -87,13 +112,17 @@ export default class {
                     phone: value.phone,
                     phone_additional: value.phone_additional,
                 }
-                let user = await CUser.Add ( fields );
+                let user = await CUser.Add ( fields )
 
                 fields = {
                     user_id: fields._id,
 
                     contract_id: value.contract_id,
                     hf: value.hf,
+
+                    price: price,
+                    research: arResearch,
+                    specialist: arSpecialist,
 
                     subdivision: value.subdivision,
                     profession: value.profession,
@@ -102,29 +131,59 @@ export default class {
                     work_place: value.work_place,
                     work_experience: value.work_experience,
                 }
-                let hfUser = await CHfUser.Add ( fields );
+                let hfUser = await CHfUser.Add ( fields )
 
                 ctx.body = {
                     err: 0,
                     response: true
                 };
             } catch (err) {
-                throw ({...{err: 30100000, msg: 'RHfUser Add'}, ...err});
+                throw ({...{err: 30100000, msg: 'RHfUser Add'}, ...err})
             }
         } catch (err) {
             ctx.body = err;
         }
     }
-
-    static async Get (ctx, next) {
+    static async GetById (ctx, next) {
         let value;
+        try {
+            try {
+                //редактируем массив перед проверкой
+                ctx.request.query.ids = ctx.request.query.ids.split(',')
+
+                //схема
+                const schema = Joi.object({
+                    ids: Joi.array().min(1).max(50).items(Joi.string().min(24).max(24)).required()
+                })
+                value = await schema.validateAsync(ctx.request.query)
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
+            }
+            try {
+                let result = await CHfUser.GetById ( value.ids )
+                console.log(result)
+                ctx.body = {
+                    err: 0,
+                    response: result[0]
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'RHfOrg GetById'}, ...err})
+            }
+        } catch (err) {
+            ctx.body = err
+        }
+    }
+    static async Get (ctx, next) {
+        let value
         try {
             try {
                 //схема
                 const schema = Joi.object({
                     contract_id: Joi.string().min(24).max(24).allow(null).empty('').default(null),
-                });
-                value = await schema.validateAsync(ctx.request.query);
+                })
+                value = await schema.validateAsync(ctx.request.query)
 
             } catch (err) {
                 console.log(err)
@@ -135,7 +194,7 @@ export default class {
                     contract_id: value.contract_id
                 }
 
-                let result = await CHfUser.Get ( arFields );
+                let result = await CHfUser.Get ( arFields )
 
                 ctx.body = {
                     err: 0,
@@ -144,10 +203,10 @@ export default class {
                     }
                 };
             } catch (err) {
-                throw ({...{err: 30100000, msg: 'RHfUser HfUserGet'}, ...err});
+                throw ({...{err: 30100000, msg: 'RHfUser HfUserGet'}, ...err})
             }
         } catch (err) {
-            ctx.body = err;
+            ctx.body = err
         }
     }
 

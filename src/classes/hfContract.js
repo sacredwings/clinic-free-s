@@ -17,12 +17,12 @@ export default class {
         }
     }
 
-    static async GetById ( fields ) {
+    static async GetById ( ids ) {
         try {
-            fields._id = new DB().ObjectID(fields._id)
+            ids = new DB().arObjectID(ids)
 
             let collection = DB.Client.collection('hf_contract');
-            let result = await collection.find(fields).toArray()
+            let result = await collection.find({_id: { $in: ids}}).toArray()
             return result
 
         } catch (err) {

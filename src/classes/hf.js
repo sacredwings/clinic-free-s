@@ -15,6 +15,18 @@ export default class {
         }
     }
 
+    static async GetByCode ( codes ) {
+        try {
+            let collection = DB.Client.collection('hf');
+            let result = await collection.find({code: { $in: codes}}).toArray()
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHarmfulFactor GetById'}, ...err})
+        }
+    }
+
     static async Get (  ) {
         try {
             let collection = DB.Client.collection('hf');

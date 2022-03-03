@@ -85,4 +85,18 @@ export default class {
             throw ({...{err: 7001000, msg: 'CHfSpecialist Delete'}, ...err})
         }
     }
+
+    static async GetById ( ids ) {
+        try {
+            ids = new DB().arObjectID(ids)
+
+            let collection = DB.Client.collection('hf_specialist');
+            let result = await collection.find({_id: { $in: ids}}).toArray()
+            return result
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfSpecialist GetById'}, ...err})
+        }
+    }
 }

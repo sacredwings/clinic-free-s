@@ -84,7 +84,6 @@ export default class {
         }
     }
 
-
     static async GetById (ctx, next) {
         let value;
         try {
@@ -101,17 +100,14 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let fields = {
-                    _id: value.id
-                }
-                let result = await CHfContract.GetById (fields);
+                let result = await CHfContract.GetById ([value.id]);
 
                 ctx.body = {
                     err: 0,
                     response: result[0]
                 };
             } catch (err) {
-                throw ({...{err: 10000000, msg: 'RHfOrg GetById'}, ...err});
+                throw ({...{err: 10000000, msg: 'COrgContract GetById'}, ...err});
             }
         } catch (err) {
             ctx.body = err;

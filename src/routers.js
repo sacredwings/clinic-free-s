@@ -73,6 +73,7 @@ routerHfContract.get('/getById', routersHfContract.GetById)
 const routerHfUser = new Router({prefix: '/hf-user'})
 routerHfUser.post('/add', routersHfUser.Add)
 routerHfUser.get('/get', routersHfUser.Get)
+routerHfUser.get('/getById', routersHfUser.GetById)
 
 const routerHfPrice = new Router({prefix: '/hf-price'})
 routerHfPrice.get('/get', routersHfPrice.Get)
