@@ -16,6 +16,7 @@ export default class {
 
                     date_from: Joi.date().allow(null).empty('').default(null),
                     date_to: Joi.date().allow(null).empty('').default(null),
+                    type: Joi.any().valid('one', 'many', 'global').required(),
                     price: Joi.number().integer().min(0).max(999999).allow(null).empty('').default(null),
                 });
 
