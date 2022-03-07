@@ -44,7 +44,7 @@ export default class {
         try {
             fields.hf_id = new DB().ObjectID(fields.hf_id)
             fields.id = new DB().ObjectID(fields.id)
-            let collection = DB.Client.collection('hf_specialist');
+            let collection = DB.Client.collection('hf')
 
             //поиск
             let arFields = {

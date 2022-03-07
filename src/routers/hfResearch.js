@@ -91,7 +91,7 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    _id: Joi.string().min(24).max(24).required(),
+                    id: Joi.string().min(24).max(24).required(),
                     name: Joi.string().min(1).max(255).required(),
                 });
 
@@ -124,7 +124,7 @@ export default class {
             try {
                 //схема
                 const schema = Joi.object({
-                    _id: Joi.string().min(24).max(24).required(),
+                    id: Joi.string().min(24).max(24).required(),
                 });
 
                 value = await schema.validateAsync(ctx.request.body)

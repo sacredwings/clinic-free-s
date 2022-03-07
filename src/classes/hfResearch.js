@@ -45,12 +45,12 @@ export default class {
         try {
             fields.hf_id = new DB().ObjectID(fields.hf_id)
             fields.id = new DB().ObjectID(fields.id)
-            let collection = DB.Client.collection('hf_research');
+            let collection = DB.Client.collection('hf');
 
             //поиск
             let arFields = {
                 _id: fields.hf_id,
-                specialist_id: fields.id
+                research_id: fields.id
             }
             let result = await collection.findOne(arFields)
 
