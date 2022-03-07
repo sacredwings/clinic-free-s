@@ -45,4 +45,36 @@ export default class {
             throw ({...{err: 7001000, msg: 'CHfContract Get'}, ...err})
         }
     }
+
+    static async UpdateHf ( fields ) {
+        try {
+            fields.id = new DB().ObjectID(fields.id)
+            fields.research_id = new DB().ObjectID(fields.research_id)
+            let collection = DB.Client.collection('hf_contract');
+
+            //поиск
+            let arFields = {
+                _id: fields.id,
+                research_id: fields.research_id
+            }
+            let result = await collection.findOne(arFields)
+
+            if (result)
+                //удаление
+                await collection.update(
+                    { _id: fields.id },
+                    { $pull: { 'research_id': fields.research_id} }
+                )
+            else
+                //добавление
+                await collection.update(
+                    { _id: fields.id },
+                    { $push: { 'research_id': fields.research_id} }
+                )
+
+        } catch (err) {
+            console.log(err)
+            throw ({...{err: 7001000, msg: 'CHfResearch UpdateHf'}, ...err})
+        }
+    }
 }

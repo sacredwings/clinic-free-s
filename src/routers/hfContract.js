@@ -2,6 +2,7 @@ import Joi from "joi";
 import CHfContract from "../classes/hfContract";
 import CHfUser from "../classes/hfUser";
 import CHf from "../classes/hf";
+import CHfSpecialist from "../classes/hfSpecialist";
 
 export default class {
 
@@ -100,11 +101,22 @@ export default class {
                 throw ({...{err: 412, msg: 'Неверные параметры'}, ...err});
             }
             try {
-                let result = await CHfContract.GetById ([value.id]);
+                let rsItem = await CHfContract.GetById ([value.id]);
 
+                let arFields = {
+                    contract_id: value.id
+                }
+
+                let sum = 0
+                let rsUsers = await CHfUser.Get ( arFields )
+                for (const user of rsUsers) {
+                    sum += user.price
+                }
+
+                rsItem[0].price = sum
                 ctx.body = {
                     err: 0,
-                    response: result[0]
+                    response: rsItem[0]
                 };
             } catch (err) {
                 throw ({...{err: 10000000, msg: 'COrgContract GetById'}, ...err});
@@ -113,6 +125,38 @@ export default class {
             ctx.body = err;
         }
     }
+
+    static async UpdateHf (ctx, next) {
+        let value;
+        try {
+            try {
+                //схема
+                const schema = Joi.object({
+                    id: Joi.string().max(24).max(24).required(),
+                    research_id: Joi.string().max(24).max(24).required(),
+                });
+
+                value = await schema.validateAsync(ctx.request.body)
+
+            } catch (err) {
+                console.log(err)
+                throw ({...{err: 412, msg: 'Неверные параметры'}, ...err})
+            }
+            try {
+                let result = await CHfContract.UpdateHf ( value )
+
+                ctx.body = {
+                    err: 0,
+                    response: result
+                };
+            } catch (err) {
+                throw ({...{err: 10000000, msg: 'RHfSpecialist Add'}, ...err})
+            }
+        } catch (err) {
+            ctx.body = err
+        }
+    }
+
 /*
     static async StatisticByUser (ctx, next) {
         let value;
