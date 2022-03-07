@@ -81,6 +81,9 @@ export default class {
                     arSpecialist = [...arSpecialist, ...hf.specialist_id]
                 }
 
+                //объединение с базовыми из контракта
+                arResearch = [...arResearch, ...hfContract.research_id]
+
                 arResearch = await CHfResearch.GetById (arResearch)
                 arSpecialist = await CHfSpecialist.GetById (arSpecialist)
 
